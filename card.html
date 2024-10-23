@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Card with Fireball Cursor</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400&family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #073323; /* Dark green background */
+      font-family: Arial, sans-serif;
+    }
+
+    .card {
+      position: relative;
+      width: 400px;
+      height: 500px;
+      background: rgba(255, 255, 255, 0.1); /* Transparent glass effect */
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      overflow: hidden;
+      padding: 45px;
+      backdrop-filter: blur(10px); /* Adds blur for the glass effect */
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Default shadow */
+      transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .image-frame {
+      width: 100px; /* Adjust size for smaller icon */
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px; /* Equal gap between icon and title */
+    }
+
+    .image-frame img {
+      width: 130%; /* Make the icon fit within the smaller container */
+      height: auto;
+      object-fit: contain; /* Ensure the icon scales properly */
+    }
+
+    .card-title {
+      font-size: 30px; /* Larger title size */
+      margin-bottom: 20px; /* Equal gap between title and description */
+      color: #fff; /* White text */
+      text-align: center;
+      font-family: 'Poppins', sans-serif; /* Font for title */
+    }
+
+    .card-desc {
+      font-size: 16px;
+      color: #ddd; /* White-ish description */
+      text-align: center;
+      line-height: 28px;
+      font-family: 'Albert Sans', sans-serif; /* Font for description */
+    }
+
+    /* Hover effect: Dark purple follows cursor */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(128, 0, 128, 0.2), transparent); /* Dark purple hover effect */
+      transition: transform 0.2s ease;
+      transform-origin: center;
+    }
+
+    .card:hover::before {
+      transform: scale(1.5);
+    }
+
+    /* Hover shadow effect on card */
+    .card:hover {
+      cursor: url('fireball.png'), auto; /* Custom fireball cursor on hover */
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5); /* Increased shadow on hover */
+      transform: translateY(-10px); /* Slight lift effect */
+    }
+
+    /* Color movement based on cursor */
+    .card:hover::before {
+      background: radial-gradient(circle at var(--x) var(--y), rgba(128, 0, 128, 0.3), transparent 80%);
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="card" id="card1">
+    <div class="image-frame">
+      <!-- Icon without background (make sure the icon file has a transparent background) -->
+      <img src="web-development.png" alt="Web Development">
+    </div>
+    <h2 class="card-title">Web <br> Development</h2>
+    <p class="card-desc">
+      Creating and making a website is the best way to reach more people with your company’s message. A well-designed website can greatly increase the number of customers and boost sales.
+    </p>
+  </div>
+
+  <script>
+    // Hover animation with cursor tracking
+    const card = document.getElementById('card1');
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      card.style.setProperty('--x', `${x}px`);
+      card.style.setProperty('--y', `${y}px`);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.setProperty('--x', `50%`);
+      card.style.setProperty('--y', `50%`);
+    });
+  </script>
+
+</body>
+</html>
